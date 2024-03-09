@@ -1,6 +1,9 @@
 # Use uma Imagem Official do Python
 FROM python:3
 
+# Declarando a váriavel do nome do arquivo de configuração do NewRelic
+ENV NEW_RELIC_CONFIG_FILE=newrelic.ini  NEW_RELIC_LICENSE_KEY=licensekey
+
 # Adicionando um usuário de sistema
 RUN adduser --system --home /home/myapp  myapp
 USER myapp
@@ -18,4 +21,5 @@ COPY --chown=root:root --chmod=644 app.py requirements.txt /home/myapp/
 RUN pip install --user --trusted-host pypi.python.org -r requirements.txt
 
 # Garante que será iniciado a aplicação.
-CMD ["gunicorn", "app:app"]
+#CMD ["gunicorn", "app:app"]
+CMD ["newrelic-admin", "run-program", "gunicorn", "app:app"]

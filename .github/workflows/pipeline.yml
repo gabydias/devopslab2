@@ -17,6 +17,11 @@ jobs:
           # Você está solicitando que nenhum histórico seja baixado além do commit mais recente.
           fetch-depth: 0
 
+      - name: New Relic License
+        run: |
+          sed -i "s/licensekey/${{ vars.NEW_RELIC_LICENSE_KEY }}/g" Dockerfile
+          cat Dockerfile
+
       - name: Setup Python
         uses: actions/setup-python@v5   # https://github.com/actions/setup-python
         with:
